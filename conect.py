@@ -15,7 +15,11 @@ def conexion():
 
 def consultar(sqlquery):
     cur.execute(sqlquery)
-    return cur.fetchone()
+    return cur.fetchall()
+
+def modificar(sqlquery):
+    cur.execute(sqlquery) 
+    conec.commit()  
 
 def cerrar():
     try:
@@ -26,6 +30,8 @@ def cerrar():
         print("Error al cerrar conexión")    
 
 conexion()
-x = consultar("select * from diagnosticos")
+#y = modificar("insert into funcionarios(especialidad, rut, nombre) values ('Enfermero', '196443732', 'cristobal-urrutia')")
+#modificar("update funcionarios set rut = '123456789' where nombre = 'cristobal-castro'")
+#x = consultar("select * from funcionarios")
 cerrar()
-print(x)
+#print(x)
