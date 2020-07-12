@@ -3,11 +3,11 @@ import time
 
 
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("200.14.84.235", 5000))
-s.send('00005getsv')
+ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+ss.connect(("200.14.84.235", 5000))
+ss.send('00005getsv')
 print(" evento de conexion enviado")
-recibido = s.recv(4096)
+recibido = ss.recv(4096)
 print("recibiendo respuesta de conexion...")
 print(recibido)
 
@@ -28,14 +28,14 @@ while True:
 	\n""")
     if(opcion == "1"):
 		print("Ha seleccionado la opcion 'iniciar sesión de funcionario \n'")
-		s.send('00010getsvinmed')
+		ss.send('00010getsvinmed')
 		datos = input(" favor escribir su Nombre , rut sin puntos ni dv y especialidad separados por espacios: \n")
 		temp = llenado(len(datos+'addpr'))
 		mensaje = temp+'addpr'+datos
-		s.send(mensaje)
-		recibido = s.recv(4096)
+		ss.send(mensaje)
+		recibido = ss.recv(4096)
 		#print(recibido)
-		recibido = s.recv(4096)
+		recibido = ss.recv(4096)
 		#print("recibiendo:")
 		print(recibido[12:])
 
@@ -43,46 +43,51 @@ while True:
         print("Ha seleccionado 'registrar consulta'")
 		# se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
 		
-		s.send('00010getsvaddcon')
+		ss.send('00010getsvaddcon')
 		datos = input("Escribir nombre de paciente, rut, provision, fecha(dd/mm/aaa) y hora(hh:mm) separado por espacios: \n")
 		temp = llenado(len(datos+'addcon'))
 		mensaje = temp +'delet'+ datos
-		s.send(mensaje)
-		recibido = s.recv(4096)
+		ss.send(mensaje)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
-		recibido = s.recv(4096)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
 		#print("recibiendo:")
 		print(recibido[12:])
     
     if(opcion == 3):
-        print("Ha seleccionado 'solicitar consulta'")
-		# se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
-		
-		s.send('00010getsvcon')
-		datos = input("Escribir rut de paciente (11111111): \n")
-		temp = llenado(len(datos+'con'))
-		mensaje = temp +'con'+ datos
+        print("Ha seleccionado la opcion: 'solicitar consulta': \n")
+		# se debe estar con sesión iniciada de entes, luego mover esto al if de op 1 
+		#la duda es con los eventos de conexion porque son "anidados"
+		print("enviando evento de conexion ... \n")
+		ss.send('00010getsvcon')
+
+		datos = input("Escribir rut de paciente ( formato: 1111111-1): \n")
+
+		#agregar condicion de verificacion (que este bien escrito)
+
+		aux = llenado(len(datos+'con'))
+		mensaje = aux +'con'+ datos
 		s.send(mensaje)
-		recibido = s.recv(4096)
-		#print('recibido', recibido)
-		recibido = s.recv(4096)
-		#print('recibido', recibido)
-		#print("recibiendo:")
+		recibido = ss.recv(4096)
+		print('recibido', recibido)
+		recibido = ss.recv(4096)
+		print('recibido: ', recibido)
+		print("recibiendo:")
 		print(recibido[12:])
     
     if(opcion == 4):
         print("Ha seleccionado 'registrar funcionario'")
 		# se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
 		
-		s.send('00010getupfun')
+		ss.send('00010getupfun')
 		datos = input("Escribir nombre , rut, especialidad  separado por espacios: \n")
 		temp = llenado(len(datos+'upfun'))
 		mensaje = temp +'upfun'+ datos
-		s.send(mensaje)
-		recibido = s.recv(4096)
+		ss.send(mensaje)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
-		recibido = s.recv(4096)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
 		#print("recibiendo:")
 		print(recibido[12:])
@@ -91,14 +96,14 @@ while True:
         print("Ha seleccionado 'consultar paciente en lista de espera'")
 		# se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
 		
-		s.send('00010getsaddex')
+		ss.send('00010getsaddex')
 		datos = input("escribir hora, tipo de examen y rut del paciente separado por espacios (11111111): \n")
 		temp = llenado(len(datos+'addex'))
 		mensaje = temp +'addex'+ datos
-		s.send(mensaje)
-		recibido = s.recv(4096)
+		ss.send(mensaje)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
-		recibido = s.recv(4096)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
 		#print("recibiendo:")
 		print(recibido[12:])
@@ -107,14 +112,14 @@ while True:
         print("Ha seleccionado 'registrar orden de examen'")
 		# se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
 		
-		s.send('00010getsaddex')
+		ss.send('00010getsaddex')
 		datos = input("escribir hora, tipo de examen y rut del paciente separado por espacios (11111111): \n")
 		temp = llenado(len(datos+'addex'))
 		mensaje = temp +'addex'+ datos
-		s.send(mensaje)
-		recibido = s.recv(4096)
+		ss.send(mensaje)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
-		recibido = s.recv(4096)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
 		#print("recibiendo:")
 		print(recibido[12:])
@@ -123,14 +128,14 @@ while True:
         print("Ha seleccionado 'consultar orden de examen'")
 		# se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
 		
-		s.send('00010getsvex')
+		ss.send('00010getsvex')
 		datos = input("Escribir rut de paciente (11111111): \n")
 		temp = llenado(len(datos+'con'))
 		mensaje = temp +'con'+ datos
-		s.send(mensaje)
-		recibido = s.recv(4096)
+		ss.send(mensaje)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
-		recibido = s.recv(4096)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
 		#print("recibiendo:")
 		print(recibido[12:])
@@ -140,14 +145,14 @@ while True:
         print("Ha seleccionado 'registrar paciente '")
 		# se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
 		
-		s.send('00010getsaddig')
+		ss.send('00010getsaddig')
 		datos = input("los datos de la tabla: \n")
 		temp = llenado(len(datos+'adddig'))
 		mensaje = temp +'adddig'+ datos
-		s.send(mensaje)
-		recibido = s.recv(4096)
+		ss.send(mensaje)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
-		recibido = s.recv(4096)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
 		#print("recibiendo:")
 		print(recibido[12:])
@@ -156,14 +161,14 @@ while True:
         print("Ha seleccionado 'consultar paciente en lista de espera'")
 		# se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
 		
-		s.send('00010getsvdig')
+		ss.send('00010getsvdig')
 		datos = input("datos del diagnostico: \n")
 		temp = llenado(len(datos+'dig'))
 		mensaje = temp +'dig'+ datos
-		s.send(mensaje)
-		recibido = s.recv(4096)
+		ss.send(mensaje)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
-		recibido = s.recv(4096)
+		recibido = ss.recv(4096)
 		#print('recibido', recibido)
 		#print("recibiendo:")
 		print(recibido[12:])
@@ -174,12 +179,12 @@ while True:
 
 
     if(opcion == 0):
-        s.send('quit')
+        ss.send('quit')
 		time.sleep(5)
 		break
 
 print("ha cerrado terminal")
-s.close()
+ss.close()
     
     
     
