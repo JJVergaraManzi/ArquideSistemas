@@ -25,7 +25,7 @@ def cerrar():
     try:
         cur.close()
         conec.close()
-        print("Conexión con  base de datos cerrada")
+        print("Conexión con base de datos cerrada")
     except:
         print("Error al cerrar conexión")    
 
