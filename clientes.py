@@ -1,6 +1,7 @@
 import socket
 import time
 
+
 def llenado(largo):
     aux = str(largo)
     while len(aux) < 5:
@@ -9,12 +10,10 @@ def llenado(largo):
     return aux
 
 
-ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-ss.connect(("localhost", 5000))
-ss.send('00005getsv'.encode())
-print(" evento de conexion enviado")
-recibido = ss.recv(4096)
-print("recibiendo respuesta de conexion...")
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("localhost", 5000))
+s.send(bytes('00010sinitlogin', 'utf-8'))
+recibido = s.recv(4096)
 print(recibido)
 
 
@@ -34,15 +33,15 @@ while True:
 	\n""")
     if(opcion == "1"):
         print("Ha seleccionado la opcion 'iniciar sesión de funcionario '")
-        ss.send('00010getsvinmed'.encode())
+        s.send(bytes('00010getsvlogin', 'utf-8'))
         datos = input(
-            " favor escribir su Nombre , rut sin puntos ni dv y especialidad separados por espacios: \n")
-        temp = llenado(len(datos+'addpr'))
-        mensaje = temp+'addpr'+datos
-        ss.send(mensaje.encode())
-        recibido = ss.recv(4096)
+            "favor escribir su Nombre , rut sin puntos ni dv y especialidad separados por espacios: \n")
+        temp = llenado(len(datos+'login'))
+        mensaje = temp+'login'+datos
+        s.send(mensaje.encode())
+        recibido = s.recv(4096)
         # print(recibido)
-        recibido = ss.recv(4096)
+        recibido = s.recv(4096)
         # print("recibiendo:")
         print(recibido[12:])
 

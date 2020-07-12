@@ -14,15 +14,33 @@ def llenado(largo):
 
 #query de la consulta de un paciente mediante rut 
 
-sc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
-sc.connect(("localhost",5000)) 
-sc.send('00010sinitlogin')
-print("enviado \n")
-recibido = sc.recv(4096)
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)   
+s.connect(("localhost", 5000)) 
+s.send(bytes('00010sinitlogin','utf-8'))
+recibido=s.recv(4096)
 print(recibido)
 
-
-
-# realizar la operacion de creacion de consulta a la base de datos
-
+while True:
+    datos = s.recv(4096)
+    print(datos)
+    if datos[5:10] == 'addpr':
+        datos = datos[10:]
+        datos = datos.split()
+        respuesta='addpr'+add_producto(int(datos[0]), datos[1], int(datos[2]))  
+        print(respuesta)
+        temp=llenado(len(respuesta))  
+        print('tmp: ', temp)
+        print('tmp + respuesta:',temp+respuesta)
+        s.send(bytes(temp+respuesta,'utf-8'))
+        print("envia3")
+    else:
+        pass
+    #elif datos == 'quit':
+    #    print ("adios")
+    #    s.shutdown()
+    #    for sock in s:
+    #        sock.close() 
+    #    break
 s.close()
+
