@@ -83,20 +83,26 @@ while True:
         print("recibiendo:")
         print(recibido[12:])
 
-    if(opcion == 4):
-        print("Ha seleccionado 'registrar funcionario'")
-        # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
+    if(opcion =="4"):
+        print("Ha seleccionado 'registrar funcionario' \n")
+        s.send(bytes('00010getsvsupfu','utf-8'))
+        nombre = input("escriba su nombre completo separados por espacios: \n ")
+        rut = input("escriba su rut (formato: 12345678: ")
+        print("escoja El NUMERO NO SEA WN de su especialidad: \n")
+        for x in range(0,len(especialidad)):
+            print(str(x)+ " "+ especialidad[x])
 
-        ss.send('00010getupfun')
-        datos = input(
-            "Escribir nombre , rut, especialidad  separado por espacios: \n")
-        temp = llenado(len(datos+'upfun'))
-        mensaje = temp + 'upfun' + datos
-        ss.send(mensaje)
-        recibido = ss.recv(4096)
-        #print('recibido', recibido)
-        recibido = ss.recv(4096)
-        #print('recibido', recibido)
+        i = int(input("opcion: "))
+        
+        esp = especialidad[i]
+
+        datos = nombre+" "+rut + " " + esp
+        temp = llenado(len(datos+'supfu'))
+        mensaje = temp+'supfu'+datos
+        s.send(bytes(mensaje,'utf-8'))
+        recibido = s.recv(4096)
+        # print(recibido)
+        recibido = s.recv(4096)
         # print("recibiendo:")
         print(recibido[12:])
 
