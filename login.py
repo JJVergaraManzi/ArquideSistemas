@@ -24,10 +24,10 @@ print(recibido)
 while True:
     datos = s.recv(4096)
     print(datos)
-    if datos[5:10] == 'addpr':
+    if datos[5:10] == 'login':
         datos = datos[10:]
         datos = datos.split()
-        respuesta='addpr'+add_producto(int(datos[0]), datos[1], int(datos[2]))  
+        respuesta='login'+add_producto(int(datos[0]), datos[1], int(datos[2]))  
         print(respuesta)
         temp=llenado(len(respuesta))  
         print('tmp: ', temp)

@@ -12,7 +12,7 @@ def llenado(largo):
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("localhost", 5000))
-s.send(bytes('00010sinitlogin', 'utf-8'))
+s.send(bytes('00005getsv','utf-8'))
 recibido = s.recv(4096)
 print(recibido)
 
@@ -33,12 +33,12 @@ while True:
 	\n""")
     if(opcion == "1"):
         print("Ha seleccionado la opcion 'iniciar sesión de funcionario '")
-        s.send(bytes('00010getsvlogin', 'utf-8'))
+        s.send(bytes('00010getsvlogin','utf-8'))
         datos = input(
             "favor escribir su Nombre , rut sin puntos ni dv y especialidad separados por espacios: \n")
         temp = llenado(len(datos+'login'))
         mensaje = temp+'login'+datos
-        s.send(mensaje.encode())
+        s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
         # print(recibido)
         recibido = s.recv(4096)
