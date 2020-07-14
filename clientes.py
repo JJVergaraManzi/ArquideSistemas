@@ -145,9 +145,11 @@ while True:
         esp = especialidad[i]
 
         #verificación de los valores
+        name = nombre.replace(" ", "_")
+        
 
         #envio de mensaje
-        datos = nombre+" "+rut + " " + esp
+        datos = name +" "+ rut + " " + esp
         temp = llenado(len(datos+'supfu'))
         mensaje = temp+'supfu'+datos
         s.send(bytes(mensaje,'utf-8'))
