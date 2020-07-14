@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import socket  
-#servicio añadir funcionario
+import os
+import sys
+scriptpath = "/home/nico/Escritorio/trabajoarqui/ArquideSistemas/"
 
-def llenado(largo):
-    aux = str(largo)
-    while len(aux) < 5:
-        aux = '0' + aux
-    print(aux)
-    return aux
-
+# Add the directory containing your module to the Python path (wants absolute paths)
+sys.path.append(os.path.abspath(scriptpath))
+# Do the import
+from conect import *
 
 
 #query de la consulta de un paciente mediante rut 
@@ -26,12 +25,17 @@ print(recibido)
 
 while True:
     datos = s.recv(4096)
-    print(datos)
     if datos.decode('utf-8').find('supfu'):
+        #decodificar el mensaje
         datos = datos[10:]
-        datos = datos.split()
-        print(datos)
+        target = datos.decode()
+        print(target)
 
+        #realizar la operacion de buscar en la bd
+        
+        
+
+        #crear mensaje de respuesta
         print("envia3")
     else:
         pass

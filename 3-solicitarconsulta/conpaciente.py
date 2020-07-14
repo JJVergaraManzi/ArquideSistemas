@@ -1,25 +1,41 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import socket  
+import os
+import sys
+scriptpath = "/home/nico/Escritorio/trabajoarqui/ArquideSistemas/"
 
+# Add the directory containing your module to the Python path (wants absolute paths)
+sys.path.append(os.path.abspath(scriptpath))
+# Do the import
+from conect import *
 
-def llenado(largo):
-    aux = str(largo)
-    while len(aux) < 5:
-        aux = '0' + aux
-    print(aux)
-    return aux
 
 
 
 #query de la consulta de un paciente mediante rut 
 
-sc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
-sc.connect(("localhost",5000)) 
-sc.send('00010sinitConsult')
-print("enviado \n")
-recibido = sc.recv(4096)
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
+s.connect(("localhost",5000)) 
+s.send(bytes('00010sinitcon', 'utf-8'))
+recibido = s.recv(4096)
 print(recibido)
+
+while True:
+    datos = s.recv(4096)
+    if datos.decode('utf-8').find('con'):
+        #decodificar el mensaje
+        datos = datos[10:]
+        target = datos.decode()
+        print(target)
+
+        #realizar la operacion de buscar en la bd
+        
+        
+
+        #crear mensaje de respuesta
+        print("envia3")
+    else:
+        pass
+    
 
 
 

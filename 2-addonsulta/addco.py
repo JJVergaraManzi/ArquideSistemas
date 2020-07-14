@@ -8,13 +8,8 @@ scriptpath = "/home/nico/Escritorio/trabajoarqui/ArquideSistemas/"
 
 # Add the directory containing your module to the Python path (wants absolute paths)
 sys.path.append(os.path.abspath(scriptpath))
-
 # Do the import
 from conect import *
-
-
-
-var = []
 
 
 #query de la consulta de un paciente mediante rut 
@@ -22,7 +17,6 @@ var = []
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
 s.connect(("localhost",5000)) 
 s.send(bytes('00010sinitaddco','utf8'))
-print("enviado \n")
 recibido = s.recv(4096)
 print(recibido)
 
@@ -30,17 +24,17 @@ print(recibido)
 
 while True:
     datos = s.recv(4096)
-    print(datos)
     if datos.decode('utf-8').find('addco'):
+        #decodificar el mensaje
         datos = datos[10:]
-        datos = datos.split()
-        print(datos)
-        for x in datos:
-            var.append(datos)
-        
-        print(var)
+        target = datos.decode()
+        print(target)
+
+        #realizar la operacion de buscar en la bd
         
         
+
+        #crear mensaje de respuesta
         print("envia3")
     else:
         pass

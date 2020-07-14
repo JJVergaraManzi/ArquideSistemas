@@ -1,5 +1,14 @@
-import threading
-import socket
+import socket  
+import os
+import sys
+scriptpath = "/home/nico/Escritorio/trabajoarqui/ArquideSistemas/"
+
+# Add the directory containing your module to the Python path (wants absolute paths)
+sys.path.append(os.path.abspath(scriptpath))
+# Do the import
+from conect import *
+
+
 
 
 
@@ -17,10 +26,16 @@ while True:
     datos = s.recv(4096)
     print(datos)
     if datos.decode('utf-8').find('conlist'):
+        #decodificar el mensaje
         datos = datos[10:]
-        datos = datos.split()
-        print(datos)
+        target = datos.decode()
+        print(target)
 
+        #realizar la operacion de buscar en la bd
+        
+        
+
+        #crear mensaje de respuesta
         print("envia3")
     else:
         pass

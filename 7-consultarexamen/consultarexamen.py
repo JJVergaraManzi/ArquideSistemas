@@ -1,6 +1,12 @@
-import threading
-import socket
+import socket  
+import os
+import sys
+scriptpath = "/home/nico/Escritorio/trabajoarqui/ArquideSistemas/"
 
+# Add the directory containing your module to the Python path (wants absolute paths)
+sys.path.append(os.path.abspath(scriptpath))
+# Do the import
+from conect import *
 
 
 
