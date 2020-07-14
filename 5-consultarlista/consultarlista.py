@@ -26,30 +26,43 @@ while True:
         print(target)
         data = target.split()
         hr = []
-        ids = []
-        hrex = []
+        date = []
+        prov = []
+        rut = []
+        name = []
 
 
 
 
 
-        consulta = f"SELECT  consultas.hora, consultas.id FROM consultas WHERE consultas.hora = '{data[0]}'"
+        consulta = f"select * from consultas where consultas.id not in (select consultas.id from consultas, diagnosticos where consultas.id = diagnosticos.consultas_id);"
         respuesta = consultar(consulta)
 
-        for h,i in respuesta:
-            hr.append(h)
-            ids.append(i)
+        for ids,hora,fecha,provision,r,n in respuesta:
+            hr.append(hora)
+            date.append(fecha)
+            prov.append(provision)
+            rut.append(r)
+            name.append(n)
+
+        res = ""
+
+        print(hr)
+        print(date)
+        print(prov)
+        print(rut)
+        print(name)
+
+        for i in range(0,len(hr)):
+            res = str(hr[i]) + " " + str(date[i])+ " " +str(prov[i]) +" "+ str(rut[i]) + " " + str(name[i])+ " "
 
         
-        consulta2 =  f"select examenes.hora from examenes,diagnosticos,consultas where examenes.diagnosticos_id = diagnosticos.id and diagnosticos.consultas_id = consultas.id and consultas.rut_paciente = '{data[0]}';";
-        
+
+
+        respuesta = 'conli' + res
 
 
         
-        respuesta2 = 'conli'
-
-
-        respuesta='conli'+str(respuesta)
         print(respuesta)
         temp=llenado(len(respuesta))  
         print('tmp: ', temp)
@@ -65,6 +78,7 @@ while True:
 
         #crear mensaje de respuesta
         print("envia3")
+        
     else:
         pass
     #elif datos == 'quit':

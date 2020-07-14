@@ -169,15 +169,15 @@ while True:
 
 
         #ingreso de valores
-        rut = input("escriba su rut (formato: 12345678): ")
+        
         #verificación de los valores
 
 
 
         #envio de mensaje
-        datos = rut
-        temp = llenado(len(datos+'conli'))
-        mensaje = temp + 'conli' + datos
+        
+        temp = llenado(len('conli'))
+        mensaje = temp + 'conli' + 'consultar_lista'
         s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
         recibido = s.recv(4096)
