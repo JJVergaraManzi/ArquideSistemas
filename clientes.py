@@ -16,10 +16,49 @@ recibido = s.recv(4096)
 
 rutAux = ""
 
-#interfaz
 while True:
     opcion = input("""Que servicio desea: 
 	1.- iniciar sesión funcionario 
+    0.- salir
+	\n""")
+
+    if(opcion == "1"):
+        print("Ha seleccionado la opcion 'iniciar sesión de funcionario '")
+        s.send(bytes('00010getsvlogin','utf-8'))
+
+        #singreso de valores
+        rut = input("escriba su rut (formato: 12345678): ")
+        print("escoja El NUMERO de su especialidad: \n")
+        for x in range(0,len(especialidad)):
+            print(str(x) + " " + especialidad[x])
+        i = int(input("opcion: "))
+        esp = especialidad[i]
+
+        #verificacion de valores
+
+        #construcción del mensaje a enviar
+        datos = rut + " "+ esp 
+        temp = llenado(len(datos+'login'))
+        mensaje = temp +'login'+ datos
+        s.send(bytes(mensaje,'utf-8'))
+        recibido = s.recv(4096)
+        recibido = s.recv(4096)
+        print(recibido[12:])
+        recibido = recibido[12:].decode()
+        if recibido != "no_existe_usuario":
+            rutAux = rut
+            break
+    if opcion == "0":
+        break
+
+#interfaz
+while True:
+    if opcion == "0":
+        s.send(bytes('quit','utf-8'))
+        time.sleep(5)
+        break
+
+    opcion = input("""Que servicio desea: 
 	2.- registrar  consulta
 	3.- solicitar  consulta por rut de paciente
 	4.- registrar funcionario de salud
@@ -30,37 +69,6 @@ while True:
     9.- solicitar diagnostico de paciente
     0.- salir
 	\n""")
-
-
-
-    if(opcion == "1"):
-        print("Ha seleccionado la opcion 'iniciar sesión de funcionario '")
-        s.send(bytes('00010getsvlogin','utf-8'))
-        
-        #singreso de valores
-        rut = input("escriba su rut (formato: 12345678): ")
-        print("escoja El NUMERO de su especialidad: \n")
-        for x in range(0,len(especialidad)):
-            print(str(x) + " " + especialidad[x])
-
-        i = int(input("opcion: "))
-        esp = especialidad[i]
-
-        #verificacion de valores
-
-
-        
-
-        #construcción del mensaje a enviar
-        datos = rut + " "+ esp 
-        temp = llenado(len(datos+'login'))
-        mensaje = temp +'login'+ datos
-        s.send(bytes(mensaje,'utf-8'))
-        recibido = s.recv(4096)
-        recibido = s.recv(4096)
-        print(recibido[12:])
-        rutAux = rut
-
     
     if(opcion == '2'):
         # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
