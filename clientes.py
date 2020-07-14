@@ -167,20 +167,13 @@ while True:
 
 
         #ingreso de valores
-        hora = input("escriba la hora (formato: hh:mm): \n ")
         rut = input("escriba su rut (formato: 12345678): ")
-        print("escoja El NUMERO del tipo de examen: \n")
-        for x in range(0,len(examenes)):
-            print(str(x)+ " "+ examenes[x])
-
-        i = int(input("opcion: "))
-        ex = examenes[i]
         #verificación de los valores
 
 
 
         #envio de mensaje
-        datos = hora + " " + rut + " " + ex
+        datos = rut
         temp = llenado(len(datos+'conli'))
         mensaje = temp + 'conli' + datos
         s.send(bytes(mensaje,'utf-8'))

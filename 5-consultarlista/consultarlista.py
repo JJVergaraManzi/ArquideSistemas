@@ -30,6 +30,20 @@ while True:
         datos = datos[10:]
         target = datos.decode()
         print(target)
+        data = target.split()
+
+
+        consulta = f"SELECT  consultas.rut_paciente FROM consultas WHERE consultas.rut_paciente = '{data[0]}'"
+        respuesta = consultar(consulta)
+        respuesta='login'+str(respuesta)
+        print(respuesta)
+        temp=llenado(len(respuesta))  
+        print('tmp: ', temp)
+        print('tmp + respuesta:',temp+respuesta)
+        s.send(bytes(temp+respuesta,'utf-8'))
+
+
+
 
         #realizar la operacion de buscar en la bd
         
