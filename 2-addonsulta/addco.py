@@ -34,7 +34,11 @@ while True:
 
         
         respuesta = modificar(consulta)
-        respuesta='addco'+str(respuesta)
+        
+        if respuesta == None:
+            respuesta = "usuario anadido con exito"
+        
+        respuesta='addco'+respuesta
         print(respuesta)
         temp=llenado(len(respuesta))  
         print('tmp: ', temp)

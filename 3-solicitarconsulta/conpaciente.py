@@ -26,17 +26,41 @@ while True:
         datos = datos[10:]
         target = datos.decode()
         print(target)
+        data = target.split()
+        hr = []
+        f = []
 
         #realizar la operacion de buscar en la bd
 
-        consulta = f"SELECT  consultas.rut_paciente FROM consultas WHERE consultas.rut_paciente = '{data[0]}'"
+        consulta = f"SELECT  consultas.hora,consultas.fecha FROM consultas WHERE consultas.rut_paciente = '{data[0]}'"
         respuesta = consultar(consulta)
-        respuesta='conpa'+str(respuesta)
-        print(respuesta)
-        temp=llenado(len(respuesta))  
+
+
+
+
+
+        if len(respuesta )!= 0:
+            for hora,fecha, in respuesta: 
+                hr.append(hora)
+                f.append(fecha)
+            respuesta2='conpa'+f"el paciente tiene consulta el {f[0]} a las {hr[0]}"
+            
+        #si ta
+        else:
+            respuesta2 = 'conpa' + "no_hay_hora _del"
+        
+
+
+
+
+
+
+        
+        print(respuesta2)
+        temp=llenado(len(respuesta2))  
         print('tmp: ', temp)
-        print('tmp + respuesta:',temp+respuesta)
-        s.send(bytes(temp+respuesta,'utf-8'))
+        print('tmp + respuesta:',temp+respuesta2)
+        s.send(bytes(temp+respuesta2,'utf-8'))
         
         
 
