@@ -5,6 +5,7 @@ from conect import *
 
 especialidad = ["cardiologia", "pediatria", "broncopulmonar", "med interna", "med general"]
 examenes = ["electroenfelalograma", "pcr", "muestra de sangre", "TAC", "curva de glucosa"]
+previsiones = ["fonasa", "colmena", "avansalud", "banmedica" , "otro"]
 #conexion de socket cliente
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -57,23 +58,43 @@ while True:
         recibido = s.recv(4096)
         print(recibido[12:])
 
-    # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
+    
     if(opcion == '2'):
-        
+        # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
         print("Ha seleccionado 'registrar consulta'")
         s.send(bytes('00010getsvaddco','utf-8'))
-        
 
-        datos = input(
-            "Escribir nombre de paciente, rut, provision, fecha(dd/mm/aaa) y hora(hh:mm) separado por espacios: \n")
+
+        #ingresar dato
+
+        nombre = input("escriba su nombre completo separados por espacios: \n ")
+
+        rut = input("escriba su rut (formato: 11111111): \n ")
+
+        fecha = input("escriba fecha  de la consulta (formato: dd/mm/aaaa): \n ")
+
+        hora = input("escriba hora de la consulta (formato: hh:mm): \n ")
+
+        print("escoja El NUMERO de su prevision de salud: \n")
+        for x in range(0,len(previsiones)):
+            print(str(x)+ " "+ previsiones[x])
+
+        i = int(input("opcion: "))
+        prev = previsiones[i]
+
+
+        #verificacion de valores:
+
+
+        #creacion del mensaje
+
+        datos = nombre + " " + rut + " " + fecha + " " + hora + " " + prev
         temp = llenado(len(datos+'addco'))
         mensaje = temp + 'addco' + datos
-        s.send(mensaje.encode())
+        s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
-        #print('recibido', recibido)
         recibido = s.recv(4096)
-        #print('recibido', recibido)
-        # print("recibiendo:")
+        
         print(recibido[12:])
 
     if(opcion == '3'):
@@ -83,8 +104,7 @@ while True:
         
         #ingreso de dato
 
-        datos = input("Escribir rut de paciente ( formato: 1111111-1): \n")
-
+        datos = input("Escribir rut de paciente ( formato: 11111111): \n")
         # verificacion del dato
 
 

@@ -1,16 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import socket  
-
 #servicio de añadir consulta
+import socket  
+import os
+import sys
+scriptpath = "/home/nico/Escritorio/trabajoarqui/ArquideSistemas/"
 
-def llenado(largo):
-    aux = str(largo)
-    while len(aux) < 5:
-        aux = '0' + aux
-    print(aux)
-    return aux
+# Add the directory containing your module to the Python path (wants absolute paths)
+sys.path.append(os.path.abspath(scriptpath))
 
+# Do the import
+from conect import *
+
+
+
+var = []
 
 
 #query de la consulta de un paciente mediante rut 
@@ -27,10 +31,14 @@ print(recibido)
 while True:
     datos = s.recv(4096)
     print(datos)
-    if ddatos.decode('utf-8').find('addco'):
+    if datos.decode('utf-8').find('addco'):
         datos = datos[10:]
         datos = datos.split()
         print(datos)
+        for x in datos:
+            var.append(datos)
+        
+        print(var)
         
         
         print("envia3")
