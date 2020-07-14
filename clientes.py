@@ -3,8 +3,8 @@ import time
 from conect import *
 
 
-especialidad = ["cardiologia", "pediatria", "broncopulmonar", "med interna", "med general"]
-examenes = ["electroenfelalograma", "pcr", "muestra de sangre", "TAC", "curva de glucosa"]
+especialidad = ["cardiologia", "pediatria", "broncopulmonar", "med_interna", "med_general"]
+examenes = ["electroenfelalograma", "pcr", "muestra_de_sangre", "TAC", "glucosa"]
 previsiones = ["fonasa", "colmena", "avansalud", "banmedica" , "otro"]
 #conexion de socket cliente
 

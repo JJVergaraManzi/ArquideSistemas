@@ -1,4 +1,4 @@
---
+﻿--
 -- PostgreSQL database dump
 --
 
@@ -18,7 +18,7 @@ SET row_security = off;
 
 SET default_tablespace = '';
 
-SET default_table_access_method = heap;
+
 
 --
 -- Name: consultas; Type: TABLE; Schema: public; Owner: postgres
@@ -200,32 +200,32 @@ ALTER TABLE ONLY public.funcionarios ALTER COLUMN id SET DEFAULT nextval('public
 -- Data for Name: consultas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.consultas (id, hora, fecha, provision, rut_paciente, nombre_paciente) FROM stdin;
-\.
+--COPY public.consultas (id, hora, fecha, provision, rut_paciente, nombre_paciente) FROM stdin;
+
 
 
 --
 -- Data for Name: diagnosticos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.diagnosticos (id, comentarios, diagnostico, sintomas, funcionarios_id, consultas_id) FROM stdin;
-\.
+--COPY public.diagnosticos (id, comentarios, diagnostico, sintomas, funcionarios_id, consultas_id) FROM stdin;
+
 
 
 --
 -- Data for Name: examenes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.examenes (id, tipo_examen, hora, diagnosticos_id) FROM stdin;
-\.
+--COPY public.examenes (id, tipo_examen, hora, diagnosticos_id) FROM stdin;
+
 
 
 --
 -- Data for Name: funcionarios; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.funcionarios (id, especialidad, rut, nombre) FROM stdin;
-\.
+--COPY public.funcionarios (id, especialidad, rut, nombre) FROM stdin;
+
 
 
 --

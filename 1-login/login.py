@@ -3,10 +3,7 @@
 import socket  
 import os
 import sys
-scriptpath = "/home/nico/Escritorio/trabajoarqui/ArquideSistemas/"
 
-# Add the directory containing your module to the Python path (wants absolute paths)
-sys.path.append(os.path.abspath(scriptpath))
 # Do the import
 from conect import *
 #query de la consulta de un paciente mediante rut 
@@ -25,6 +22,19 @@ while True:
         datos = datos[10:]
         target = datos.decode()
         print(target)
+        data = target.split()
+
+
+        consulta = f"SELECT  funcionarios.rut, funcionarios.especialidad FROM funcionarios WHERE funcionarios.rut = '{data[0]}' AND funcionarios.especialidad = '{data[1]}'"
+        respuesta = consultar(consulta)
+        respuesta='login'+str(respuesta)
+        print(respuesta)
+        temp=llenado(len(respuesta))  
+        print('tmp: ', temp)
+        print('tmp + respuesta:',temp+respuesta)
+        s.send(bytes(temp+respuesta,'utf-8'))
+
+        
 
         #realizar la operacion de buscar en la bd
         
