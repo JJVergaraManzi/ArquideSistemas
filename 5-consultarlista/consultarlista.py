@@ -1,11 +1,5 @@
 import socket  
-import os
-import sys
-scriptpath = "/home/nico/Escritorio/trabajoarqui/ArquideSistemas/"
 
-# Add the directory containing your module to the Python path (wants absolute paths)
-sys.path.append(os.path.abspath(scriptpath))
-# Do the import
 from conect import *
 
 
@@ -31,10 +25,30 @@ while True:
         target = datos.decode()
         print(target)
         data = target.split()
+        hr = []
+        ids = []
+        hrex = []
 
 
-        consulta = f"SELECT  consultas.hora FROM consultas WHERE consultas.hora = '{data[0]}'"
+
+
+
+        consulta = f"SELECT  consultas.hora, consultas.id FROM consultas WHERE consultas.hora = '{data[0]}'"
         respuesta = consultar(consulta)
+
+        for h,i in respuesta:
+            hr.append(h)
+            ids.append(i)
+
+        
+        consulta2 =  f"select examenes.hora from examenes,diagnosticos,consultas where examenes.diagnosticos_id = diagnosticos.id and diagnosticos.consultas_id = consultas.id and consultas.rut_paciente = '{data[0]}';";
+        
+
+
+        
+        respuesta2 = 'conli'
+
+
         respuesta='conli'+str(respuesta)
         print(respuesta)
         temp=llenado(len(respuesta))  
