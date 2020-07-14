@@ -15,8 +15,8 @@ def llenado(largo):
 #query de la consulta de un paciente mediante rut 
 
 sc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
-sc.connect(("localhost",5000)) 
-sc.send('00010sinitsignup')
+sc.connect(('localhost',5000)) 
+sc.send(bytes('00010sinitsignup','utf-8'))
 print("enviado \n")
 recibido = sc.recv(4096)
 print(recibido)
@@ -25,4 +25,4 @@ print(recibido)
 
 # realizar la operacion de creacion de consulta a la base de datos
 
-s.close()
+sc.close()

@@ -8,6 +8,8 @@ sys.path.append(os.path.abspath(scriptpath))
 # Do the import
 from conect import *
 
+conexion()
+cerrar()
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
 s.connect(("localhost",5000)) 
