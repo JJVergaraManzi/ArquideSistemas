@@ -24,8 +24,44 @@ while True:
     print(datos)
     if datos.decode('utf-8').find('conex'):
         datos = datos[10:]
-        datos = datos.split()
-        print(datos)
+        target = datos.decode()
+        print(target)
+        data = target.split()
+        data = target.split()
+        hr = []
+        tp = []
+
+
+        consulta = f"select examenes.hora, examenes.tipo_examen from examenes,diagnosticos,consultas where  consultas.id= diagnosticos.consultas_id and examenes.diagnosticos_id = diagnosticos.id and consultas.rut_paciente = '{data[0]}';"
+        respuesta = consultar(consulta)
+
+        if len(respuesta )!= 0:
+            for h,t in respuesta: 
+                hr.append(h)
+                tp.append(t)
+
+
+                
+            respuesta2='conex'+hr[0]+tp[0]
+            
+        #si ta
+        else:
+            respuesta2 = 'conex' + "no_hay_examen_asociado"
+        
+        print(respuesta2)
+        temp=llenado(len(respuesta2))  
+        print('tmp: ', temp)
+        print('tmp + respuesta:',temp+respuesta2)
+        s.send(bytes(temp+respuesta2,'utf-8'))
+
+
+
+
+
+
+
+
+
         print("envia3")
     else:
         pass
