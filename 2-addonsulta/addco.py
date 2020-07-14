@@ -2,13 +2,6 @@
 # -*- coding: utf-8 -*-
 #servicio de añadir consulta
 import socket  
-import os
-import sys
-scriptpath = "/home/nico/Escritorio/trabajoarqui/ArquideSistemas/"
-
-# Add the directory containing your module to the Python path (wants absolute paths)
-sys.path.append(os.path.abspath(scriptpath))
-# Do the import
 from conect import *
 
 
@@ -29,8 +22,25 @@ while True:
         datos = datos[10:]
         target = datos.decode()
         print(target)
+        data = target.split()
+
+
 
         #realizar la operacion de buscar en la bd
+        #hora | fecha | provision | rut_paciente | nombre_paciente 
+        consulta = f"INSERT INTO consultas (hora, fecha, provision, rut_paciente,nombre_paciente) VALUES ('{data[3]}','{data[2]}', '{data[4]}','{data[1]}','{data[0]}');"
+
+        #INSERT INTO consultas (hora, fecha, provision, rut_paciente,nombre_paciente) VALUES (valor1, valor2, valor3);
+
+        
+        respuesta = modificar(consulta)
+        respuesta='addco'+str(respuesta)
+        print(respuesta)
+        temp=llenado(len(respuesta))  
+        print('tmp: ', temp)
+        print('tmp + respuesta:',temp+respuesta)
+        s.send(bytes(temp+respuesta,'utf-8'))
+
         
         
 

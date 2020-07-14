@@ -1,5 +1,6 @@
 import socket
 import time
+import datetime
 from conect import *
 
 
@@ -69,6 +70,7 @@ while True:
 
         nombre = input("escriba su nombre completo separados por espacios: \n ")
 
+
         rut = input("escriba su rut (formato: 11111111): \n ")
 
         fecha = input("escriba fecha  de la consulta (formato: dd/mm/aaaa): \n ")
@@ -82,13 +84,22 @@ while True:
         i = int(input("opcion: "))
         prev = previsiones[i]
 
+        
+
+
+
 
         #verificacion de valores:
+        name = nombre.replace(" ", "_")
+        date = fecha.replace("/","-")
+        date = datetime.datetime.strptime(date, '%d-%m-%Y').strftime('%Y-%m-%d')
+        
 
+        
 
         #creacion del mensaje
 
-        datos = nombre + " " + rut + " " + fecha + " " + hora + " " + prev
+        datos = name + " " + rut + " " + date + " " + hora + " " + prev
         temp = llenado(len(datos+'addco'))
         mensaje = temp + 'addco' + datos
         s.send(bytes(mensaje,'utf-8'))
