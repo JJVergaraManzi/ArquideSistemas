@@ -100,7 +100,7 @@ while True:
     if(opcion == '3'):
         # se debe estar con sesión iniciada de entes, luego mover esto al if de op 1
         print("Ha seleccionado la opcion: 'solicitar consulta': \n")
-        s.send(bytes('00010getsvcon','utf-8'))
+        s.send(bytes('00010getsvconpa','utf-8'))
         
         #ingreso de dato
 
@@ -109,8 +109,8 @@ while True:
 
 
         #enviar mensaje
-        aux = llenado(len(datos+'con'))
-        mensaje = aux + 'con' + datos
+        aux = llenado(len(datos+'conpa'))
+        mensaje = aux + 'conpa' + datos
         s.send(mensaje.encode())
         recibido = s.recv(4096)
        
@@ -149,7 +149,7 @@ while True:
     if(opcion == "5"):
         # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
         print("Ha seleccionado 'consultar paciente en lista de espera'")
-        s.send(bytes('00010getsvconlist','utf-8'))
+        s.send(bytes('00010getsvconli','utf-8'))
         
 
 
@@ -168,8 +168,8 @@ while True:
 
         #envio de mensaje
         datos = hora + " " + rut + " " + ex
-        temp = llenado(len(datos+'conlist'))
-        mensaje = temp + 'conlist' + datos
+        temp = llenado(len(datos+'conli'))
+        mensaje = temp + 'conli' + datos
         s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
         recibido = s.recv(4096)
@@ -236,7 +236,7 @@ while True:
     if(opcion == "8"):
         # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
         print("Ha seleccionado 'registrar diagnostico de paciente'")
-        s.send(bytes('00010getsvadddig','utf-8'))
+        s.send(bytes('00010getsvadddi','utf-8'))
 
         #ingreso de datos
         rut = input("Escribir rut de paciente (formato: 11111111): \n")
@@ -249,8 +249,8 @@ while True:
          
 
         datos = rut + " " + sintomas + " " + diagnostico + " " + comentarios
-        temp = llenado(len(datos+'adddig'))
-        mensaje = temp + 'adddig' + datos
+        temp = llenado(len(datos+'adddi'))
+        mensaje = temp + 'adddi' + datos
         s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
         recibido = s.recv(4096)
@@ -262,7 +262,7 @@ while True:
     if(opcion == "9"):
         # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
         print("Ha seleccionado 'consultar diagnostico de paciente'")
-        s.send(bytes('00010getsvdig','utf-8'))
+        s.send(bytes('00010getsvcodig','utf-8'))
         
         #ingreso de valores
         datos = input("Escribir rut de paciente (formato: 11111111): \n")
@@ -270,8 +270,8 @@ while True:
         #verificacion de los datos
 
         #crear mensaje
-        temp = llenado(len(datos+'dig'))
-        mensaje = temp + 'dig' + datos
+        temp = llenado(len(datos+'codig'))
+        mensaje = temp + 'codig' + datos
         s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
         recibido = s.recv(4096)

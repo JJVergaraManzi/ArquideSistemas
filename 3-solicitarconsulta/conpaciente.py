@@ -15,13 +15,13 @@ from conect import *
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
 s.connect(("localhost",5000)) 
-s.send(bytes('00010sinitcon', 'utf-8'))
+s.send(bytes('00010sinitconpa', 'utf-8'))
 recibido = s.recv(4096)
 print(recibido)
 
 while True:
     datos = s.recv(4096)
-    if datos.decode('utf-8').find('con'):
+    if datos.decode('utf-8').find('conpa'):
         #decodificar el mensaje
         datos = datos[10:]
         target = datos.decode()

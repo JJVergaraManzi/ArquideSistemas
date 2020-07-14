@@ -15,7 +15,7 @@ from conect import *
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
 s.connect(("localhost",5000)) 
-s.send(bytes('00010sinitconlist','utf8'))
+s.send(bytes('00010sinitconli','utf8'))
 print("enviado \n")
 recibido = s.recv(4096)
 print(recibido)
@@ -25,7 +25,7 @@ print(recibido)
 while True:
     datos = s.recv(4096)
     print(datos)
-    if datos.decode('utf-8').find('conlist'):
+    if datos.decode('utf-8').find('conli'):
         #decodificar el mensaje
         datos = datos[10:]
         target = datos.decode()

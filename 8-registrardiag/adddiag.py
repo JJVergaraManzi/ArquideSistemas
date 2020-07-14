@@ -1,11 +1,7 @@
 import socket  
 import os
 import sys
-scriptpath = "/home/nico/Escritorio/trabajoarqui/ArquideSistemas/"
 
-# Add the directory containing your module to the Python path (wants absolute paths)
-sys.path.append(os.path.abspath(scriptpath))
-# Do the import
 from conect import *
 
 conexion()
@@ -13,7 +9,7 @@ cerrar()
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
 s.connect(("localhost",5000)) 
-s.send(bytes('00010sinitadddig','utf8'))
+s.send(bytes('00010sinitadddi','utf8'))
 print("enviado \n")
 recibido = s.recv(4096)
 print(recibido)
@@ -25,7 +21,7 @@ print(recibido)
 while True:
     datos = s.recv(4096)
     print(datos)
-    if datos.decode('utf-8').find('adddig'):
+    if datos.decode('utf-8').find('adddi'):
         datos = datos[10:]
         datos = datos.split()
         print(datos)
