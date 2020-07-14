@@ -29,6 +29,15 @@ def cerrar():
     except:
         print("Error al cerrar conexión")    
 
+
+def llenado(largo):
+    aux = str(largo)
+    while len(aux) < 5:
+        aux = '0' + aux
+    print(aux)
+    return aux
+
+
 conexion()
 #y = modificar("insert into funcionarios(especialidad, rut, nombre) values ('Enfermero', '196443732', 'cristobal-urrutia')")
 #modificar("update funcionarios set rut = '123456789' where nombre = 'cristobal-castro'")

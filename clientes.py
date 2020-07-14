@@ -1,24 +1,21 @@
 import socket
 import time
+from conect import *
 
 
-def llenado(largo):
-    aux = str(largo)
-    while len(aux) < 5:
-        aux = '0' + aux
-    print(aux)
-    return aux
-
+especialidad = ["cardiologia", "pediatria", "broncopulmonar", "med interna", "med general"]
+examenes = ["electroenfelalograma", "pcr", "muestra de sangre", "TAC", "curva de glucosa"]
+#conexion de socket cliente
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("localhost", 5000))
 s.send(bytes('00005getsv','utf-8'))
 recibido = s.recv(4096)
-print(recibido)
 
 
+#interfaz
 while True:
-    opcion = input("""Que servicio desea
+    opcion = input("""Que servicio desea: 
 	1.- iniciar sesión funcionario 
 	2.- registrar  consulta
 	3.- solicitar  consulta por rut de paciente
@@ -28,28 +25,45 @@ while True:
     7.- solicitar orden de examen de paciente
     8.- registrar diagnostico de paciente
     9.- solicitar diagnostico de paciente
-
     0.- salir
 	\n""")
+
+
+
     if(opcion == "1"):
         print("Ha seleccionado la opcion 'iniciar sesión de funcionario '")
         s.send(bytes('00010getsvlogin','utf-8'))
-        datos = input(
-            "favor escribir su Nombre , rut sin puntos ni dv y especialidad separados por espacios: \n")
+        
+        #singreso de valores
+        rut = input("escriba su rut (formato: 12345678): ")
+        print("escoja El NUMERO de su especialidad: \n")
+        for x in range(0,len(especialidad)):
+            print(str(x) + " " + especialidad[x])
+
+        i = int(input("opcion: "))
+        esp = especialidad[i]
+
+        #verificacion de valores
+
+
+        
+
+        #construcción del mensaje a enviar
+        datos = rut + " "+ esp 
         temp = llenado(len(datos+'login'))
-        mensaje = temp+'login'+datos
+        mensaje = temp +'login'+ datos
         s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
-        # print(recibido)
         recibido = s.recv(4096)
-        # print("recibiendo:")
         print(recibido[12:])
 
+    # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
     if(opcion == '2'):
+        
         print("Ha seleccionado 'registrar consulta'")
-        # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
+        s.send(bytes('00010getsvaddco','utf-8'))
+        
 
-        s.send('00010getsvaddco'.encode())
         datos = input(
             "Escribir nombre de paciente, rut, provision, fecha(dd/mm/aaa) y hora(hh:mm) separado por espacios: \n")
         temp = llenado(len(datos+'addco'))
@@ -63,128 +77,184 @@ while True:
         print(recibido[12:])
 
     if(opcion == '3'):
-        print("Ha seleccionado la opcion: 'solicitar consulta': \n")
         # se debe estar con sesión iniciada de entes, luego mover esto al if de op 1
-        # la duda es con los eventos de conexion porque son "anidados"
-        print("enviando evento de conexion ... \n")
-        ss.send('00010getsvcon')
+        print("Ha seleccionado la opcion: 'solicitar consulta': \n")
+        s.send(bytes('00010getsvcon','utf-8'))
+        
+        #ingreso de dato
 
         datos = input("Escribir rut de paciente ( formato: 1111111-1): \n")
 
-        # agregar condicion de verificacion (que este bien escrito)
+        # verificacion del dato
 
+
+        #enviar mensaje
         aux = llenado(len(datos+'con'))
         mensaje = aux + 'con' + datos
-        s.send(mensaje)
+        s.send(mensaje.encode())
         recibido = s.recv(4096)
-        print('recibido', recibido)
+       
         recibido = s.recv(4096)
-        print('recibido: ', recibido)
-        print("recibiendo:")
+       
         print(recibido[12:])
 
     if(opcion =="4"):
-        print("Ha seleccionado 'registrar funcionario' \n")
+        print("Ha seleccionado 'registrar funcionario':  \n")
         s.send(bytes('00010getsvsupfu','utf-8'))
+        
+        
+        #ingreso de valores
         nombre = input("escriba su nombre completo separados por espacios: \n ")
-        rut = input("escriba su rut (formato: 12345678: ")
-        print("escoja El NUMERO NO SEA WN de su especialidad: \n")
+        rut = input("escriba su rut (formato: 12345678): ")
+        print("escoja El NUMERO de su especialidad: \n")
         for x in range(0,len(especialidad)):
             print(str(x)+ " "+ especialidad[x])
 
         i = int(input("opcion: "))
-        
         esp = especialidad[i]
 
+        #verificación de los valores
+
+        #envio de mensaje
         datos = nombre+" "+rut + " " + esp
         temp = llenado(len(datos+'supfu'))
         mensaje = temp+'supfu'+datos
         s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
-        # print(recibido)
+        
         recibido = s.recv(4096)
-        # print("recibiendo:")
+        
         print(recibido[12:])
 
-    if(opcion == 5):
-        print("Ha seleccionado 'consultar paciente en lista de espera'")
+    if(opcion == "5"):
         # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
+        print("Ha seleccionado 'consultar paciente en lista de espera'")
+        s.send(bytes('00010getsvconlist','utf-8'))
+        
 
-        s.send('00010getsvconlist')
-        datos = input(
-            "escribir hora, tipo de examen y rut del paciente separado por espacios (11111111): \n")
+
+        #ingreso de valores
+        hora = input("escriba la hora (formato: hh:mm): \n ")
+        rut = input("escriba su rut (formato: 12345678): ")
+        print("escoja El NUMERO del tipo de examen: \n")
+        for x in range(0,len(examenes)):
+            print(str(x)+ " "+ examenes[x])
+
+        i = int(input("opcion: "))
+        ex = examenes[i]
+        #verificación de los valores
+
+
+
+        #envio de mensaje
+        datos = hora + " " + rut + " " + ex
         temp = llenado(len(datos+'conlist'))
         mensaje = temp + 'conlist' + datos
-        s.send(mensaje)
+        s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
-        #print('recibido', recibido)
         recibido = s.recv(4096)
-        #print('recibido', recibido)
-        # print("recibiendo:")
         print(recibido[12:])
 
-    if(opcion == 6):
-        print("Ha seleccionado 'registrar orden de examen'")
+
+    if(opcion == "6"):
         # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
-        s.send('00010getsvaddex')
-        datos = input(
-            "escribir hora, tipo de examen y rut del paciente separado por espacios (11111111): \n")
+        print("Ha seleccionado 'registrar orden de examen': \n" )
+        s.send(bytes('00010getsvaddex','utf-8'))
+
+
+        #ingreso de valores
+        hora = input("escriba la hora (formato: hh:mm): \n ")
+        rut = input("escriba su rut (formato: 12345678): ")
+        print("escoja El NUMERO del tipo de examen: \n")
+        for x in range(0,len(examenes)):
+            print(str(x)+ " "+ examenes[x])
+
+        i = int(input("opcion: "))
+        ex = examenes[i]
+        #verificación de los valores
+
+
+
+        #envio de mensaje
+        datos = hora + " " + rut + " " + ex
         temp = llenado(len(datos+'addex'))
         mensaje = temp + 'addex' + datos
-        s.send(mensaje)
+        s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
-        #print('recibido', recibido)
         recibido = s.recv(4096)
-        #print('recibido', recibido)
-        # print("recibiendo:")
         print(recibido[12:])
+        
+
+
+
+
 
     if(opcion == 7):
-        print("Ha seleccionado 'consultar orden de examen'")
         # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
+        print("Ha seleccionado 'consultar orden de examen': \n")
+        s.send(bytes('00010getsvconex','utf-8'))
+        
+        #ingreso de valores
+        datos = input("Escribir rut de paciente (formato: 11111111): \n")
 
-        s.send('00010getsvconex')
-        datos = input("Escribir rut de paciente (11111111): \n")
+        #verificacion de los datos
+
+
+        #creacion del mensaje a enviar
         temp = llenado(len(datos+'conex'))
         mensaje = temp + 'conex' + datos
-        s.send(mensaje)
+        s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
-        #print('recibido', recibido)
         recibido = s.recv(4096)
-        #print('recibido', recibido)
-        # print("recibiendo:")
         print(recibido[12:])
+
+
+
+
+
 
     if(opcion == 8):
-        print("Ha seleccionado 'registrar diagnostico de paciente'")
         # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
+        print("Ha seleccionado 'registrar diagnostico de paciente'")
+        s.send(bytes('00010getsvadddig','utf-8'))
 
-        s.send('00010getsaddig')
-        datos = input("los datos de la tabla: \n")
+        #ingreso de datos
+        rut = input("Escribir rut de paciente (formato: 11111111): \n")
+
+        sintomas = input("Escribir sintomas  (formato: sintoma1,sintoma2,sintoma3... : )")
+        diagnostico = input("Escribir diagnostico: )")
+        comentarios = input("Escribir comentarios: )")
+
+        #verificacion de valores (el rut)
+         
+
+        datos = rut + " " + sintomas + " " + diagnostico + " " + comentarios
         temp = llenado(len(datos+'adddig'))
         mensaje = temp + 'adddig' + datos
-        s.send(mensaje)
+        s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
-        #print('recibido', recibido)
         recibido = s.recv(4096)
-        #print('recibido', recibido)
-        # print("recibiendo:")
         print(recibido[12:])
 
-    if(opcion == 9):
-        print("Ha seleccionado 'consultar diagnostico de paciente'")
-        # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
 
-        s.send('00010getsvdig')
-        datos = input("datos del diagnostico: \n")
+
+
+    if(opcion == 9):
+        # se debe estar con sesión iniciada de entes , luego mover esto al if de op 1
+        print("Ha seleccionado 'consultar diagnostico de paciente'")
+        s.send(bytes('00010getsvdig','utf-8'))
+        
+        #ingreso de valores
+        datos = input("Escribir rut de paciente (formato: 11111111): \n")
+
+        #verificacion de los datos
+
+        #crear mensaje
         temp = llenado(len(datos+'dig'))
         mensaje = temp + 'dig' + datos
-        s.send(mensaje)
+        s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
-        #print('recibido', recibido)
         recibido = s.recv(4096)
-        #print('recibido', recibido)
-        # print("recibiendo:")
         print(recibido[12:])
 
     if(opcion == 0):
@@ -193,4 +263,4 @@ while True:
         break
 
 print("ha cerrado terminal")
-ss.close()
+s.close()
