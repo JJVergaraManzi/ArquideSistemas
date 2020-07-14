@@ -1,13 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import socket  
-import os
-import sys
-scriptpath = "/home/nico/Escritorio/trabajoarqui/ArquideSistemas/"
 
-# Add the directory containing your module to the Python path (wants absolute paths)
-sys.path.append(os.path.abspath(scriptpath))
-# Do the import
 from conect import *
 
 
@@ -30,8 +24,25 @@ while True:
         datos = datos[10:]
         target = datos.decode()
         print(target)
+        data = target.split()
 
         #realizar la operacion de buscar en la bd
+        
+        # especialidad | rut | nombre 
+
+        consulta = f"INSERT INTO funcionarios (especialidad, rut, nombre) VALUES ('{data[2]}','{data[1]}','{data[0]}');"
+
+        respuesta = modificar(consulta)
+        respuesta='addco'+str(respuesta)
+        print(respuesta)
+        temp=llenado(len(respuesta))  
+        print('tmp: ', temp)
+        print('tmp + respuesta:',temp+respuesta)
+        s.send(bytes(temp+respuesta,'utf-8'))
+
+        
+        
+
         
         
 
