@@ -186,6 +186,7 @@ while True:
         
         temp = llenado(len('conli'))
         mensaje = temp + 'conli' + 'consultar_lista'
+        print(mensaje)
         s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
         recibido = s.recv(4096)
@@ -255,7 +256,7 @@ while True:
         s.send(bytes('00010getsvadddi','utf-8'))
 
         #ingreso de datos
-        sintomas = input("Escribir sintomas  (formato: sintoma1,sintoma2,sintoma3... : )")
+        sintomas = input("Escribir sintomas  (formato: sintoma1sin-toma2-sintoma3... : )")
         diagnostico = input("Escribir diagnostico: )")
         comentarios = input("Escribir comentarios: )")
         idDiagnostico = input("Id de consulta: )")
@@ -294,7 +295,7 @@ while True:
         recibido = recibido[29:].decode()
         cont = 0
         text = ""
-        print("Respuesta:")
+        print("Respuesta:", recibido)
         if recibido != "no hay diagnosticos asociados al rut ingresado":
             for i in range(0,len(recibido)):
                 if recibido[i] != "," and recibido[i] != ";":
