@@ -250,11 +250,13 @@ while True:
         sintomas = input("Escribir sintomas  (formato: sintoma1,sintoma2,sintoma3... : )")
         diagnostico = input("Escribir diagnostico: )")
         comentarios = input("Escribir comentarios: )")
+        idDiagnostico = input("Id de diagnostico: )")
+
 
         #verificacion de valores (el rut)
          
 
-        datos = rut + " " + sintomas + " " + diagnostico + " " + comentarios
+        datos = rut + " " + sintomas + " " + diagnostico + " " + comentarios + " " + idDiagnostico
         temp = llenado(len(datos+'adddi'))
         mensaje = temp + 'adddi' + datos
         s.send(bytes(mensaje,'utf-8'))
