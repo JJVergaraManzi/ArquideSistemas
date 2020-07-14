@@ -167,13 +167,13 @@ while True:
 
 
         #ingreso de valores
-        rut = input("escriba su rut (formato: 12345678): ")
+        hora = input("escriba su rut (formato: hh:mm): ")
         #verificación de los valores
 
 
 
         #envio de mensaje
-        datos = rut
+        datos = hora
         temp = llenado(len(datos+'conli'))
         mensaje = temp + 'conli' + datos
         s.send(bytes(mensaje,'utf-8'))

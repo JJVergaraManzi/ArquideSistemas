@@ -33,9 +33,9 @@ while True:
         data = target.split()
 
 
-        consulta = f"SELECT  consultas.rut_paciente FROM consultas WHERE consultas.rut_paciente = '{data[0]}'"
+        consulta = f"SELECT  consultas.hora FROM consultas WHERE consultas.hora = '{data[0]}'"
         respuesta = consultar(consulta)
-        respuesta='login'+str(respuesta)
+        respuesta='conli'+str(respuesta)
         print(respuesta)
         temp=llenado(len(respuesta))  
         print('tmp: ', temp)
