@@ -14,6 +14,7 @@ s.connect(("localhost", 5000))
 s.send(bytes('00005getsv','utf-8'))
 recibido = s.recv(4096)
 
+rutAux = ""
 
 #interfaz
 while True:
@@ -58,6 +59,7 @@ while True:
         recibido = s.recv(4096)
         recibido = s.recv(4096)
         print(recibido[12:])
+        rutAux = rut
 
     
     if(opcion == '2'):
@@ -245,24 +247,22 @@ while True:
         s.send(bytes('00010getsvadddi','utf-8'))
 
         #ingreso de datos
-        rut = input("Escribir rut de paciente (formato: 11111111): \n")
-
         sintomas = input("Escribir sintomas  (formato: sintoma1,sintoma2,sintoma3... : )")
         diagnostico = input("Escribir diagnostico: )")
         comentarios = input("Escribir comentarios: )")
-        idDiagnostico = input("Id de diagnostico: )")
+        idDiagnostico = input("Id de consulta: )")
 
 
         #verificacion de valores (el rut)
          
 
-        datos = rut + " " + sintomas + " " + diagnostico + " " + comentarios + " " + idDiagnostico
+        datos = sintomas + ";" + diagnostico + ";" + comentarios + ";" + idDiagnostico + ";" + rutAux
         temp = llenado(len(datos+'adddi'))
         mensaje = temp + 'adddi' + datos
         s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
         recibido = s.recv(4096)
-        print(recibido[12:])
+        print(recibido[29:].decode())
 
 
 
@@ -283,10 +283,44 @@ while True:
         s.send(bytes(mensaje,'utf-8'))
         recibido = s.recv(4096)
         recibido = s.recv(4096)
-        print(recibido[12:])
+        recibido = recibido[29:].decode()
+        cont = 0
+        text = ""
+        print("Respuesta:")
+        if recibido != "no hay diagnosticos asociados al rut ingresado":
+            for i in range(0,len(recibido)):
+                if recibido[i] != "," and recibido[i] != ";":
+                    text += recibido[i]
+                elif cont == 0:
+                    print("Nombre paciente: ", text)
+                    text = ""
+                    cont += 1
+                elif cont == 1:
+                    print("Nombre funcionario: ", text)
+                    text = ""
+                    cont += 1
+                elif cont == 2:
+                    print("Diagnostico: ", text)
+                    text = ""
+                    cont += 1   
+                elif cont == 3:
+                    print("Sintomas: ", text)
+                    text = ""
+                    cont += 1    
+                elif cont == 4:
+                    print("Comentarios: ", text)
+                    text = ""
+                    cont += 1           
+                elif cont == 5:
+                    print("Numero de diagnostico: ", text)
+                    text = ""
+                    cont = 0  
+                    print("--o--")                               
+        else:
+            print(recibido)
 
     if(opcion == "0"):
-        s.send('quit')
+        s.send(bytes('quit','utf-8'))
         time.sleep(5)
         break
 
