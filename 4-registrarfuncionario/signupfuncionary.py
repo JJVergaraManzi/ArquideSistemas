@@ -22,18 +22,29 @@ while True:
     if datos.decode('utf-8').find('supfu'):
         #decodificar el mensaje
         datos = datos[10:]
-        target = datos.decode()
+        target = datos.decode('utf-8')
         print(target)
         data = target.split()
 
         #realizar la operacion de buscar en la bd
         
         # especialidad | rut | nombre 
+        
+
 
         consulta = f"INSERT INTO funcionarios (especialidad, rut, nombre) VALUES ('{data[2]}','{data[1]}','{data[0]}');"
 
+        
         respuesta = modificar(consulta)
-        respuesta='addco'+str(respuesta)
+        
+        if respuesta == None:
+            respuesta = "usuario anadido con exito"
+        
+        
+        
+        
+
+        respuesta='supfu'+str(respuesta)
         print(respuesta)
         temp=llenado(len(respuesta))  
         print('tmp: ', temp)
@@ -50,11 +61,6 @@ while True:
         print("envia3")
     else:
         pass
-    #elif datos == 'quit':
-    #    print ("adios")
-    #    s.shutdown()
-    #    for sock in s:
-    #        sock.close() 
-    #    break
+    
 
 s.close()
