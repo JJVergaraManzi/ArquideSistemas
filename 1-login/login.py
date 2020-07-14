@@ -1,10 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import socket  
-import os
-import sys
-
-# Do the import
 from conect import *
 #query de la consulta de un paciente mediante rut 
 
@@ -23,16 +17,32 @@ while True:
         target = datos.decode()
         print(target)
         data = target.split()
+        r = []
+        n = []
 
 
         consulta = f"SELECT  funcionarios.rut, funcionarios.especialidad FROM funcionarios WHERE funcionarios.rut = '{data[0]}' AND funcionarios.especialidad = '{data[1]}'"
         respuesta = consultar(consulta)
-        respuesta='login'+str(respuesta)
         print(respuesta)
-        temp=llenado(len(respuesta))  
+
+        #si el usuario no esta
+
+        if len(respuesta )!= 0:
+            for rut,nombre in respuesta: 
+                r.append(rut)
+                n.append(nombre)
+            respuesta2='login'+r[0]+n[0]
+            
+        #si ta
+        else:
+            respuesta2 = 'login' + "no_existe_usuario"
+        
+        print(respuesta2)
+        temp=llenado(len(respuesta2))  
         print('tmp: ', temp)
-        print('tmp + respuesta:',temp+respuesta)
-        s.send(bytes(temp+respuesta,'utf-8'))
+        print('tmp + respuesta:',temp+respuesta2)
+        s.send(bytes(temp+respuesta2,'utf-8'))
+
 
         
 
